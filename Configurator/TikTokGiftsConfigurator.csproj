@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <AssemblyName>TikTokGiftsConfigurator</AssemblyName>
+
+    <!-- Single-file self-contained so no .NET install needed -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+
+    <ThronefallPlugins Condition="'$(ThronefallPlugins)' == ''">H:\SteamLibrary\steamapps\common\Thronefall\BepInEx\plugins</ThronefallPlugins>
+  </PropertyGroup>
+
+  <Target Name="DeployConfigurator" AfterTargets="Publish">
+    <Copy SourceFiles="$(PublishDir)TikTokGiftsConfigurator.exe"
+          DestinationFolder="$(ThronefallPlugins)"
+          OverwriteReadOnlyFiles="true" />
+    <Message Text="Configurator deployed to $(ThronefallPlugins)" Importance="high" />
+  </Target>
+</Project>
