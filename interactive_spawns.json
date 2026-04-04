@@ -1,0 +1,17 @@
+{
+  "waves": {
+    "0": ["E Weakling", "E Weakling", "E Weakling", "E Weakling", "E Weakling", "E Weakling", "E Weakling"],
+    "1": ["E LongSpear", "E Archer"],
+    "2": ["E Fury", "E Fury", "E Fury", "E Fury", "E Fury", "E Fury", "E Fury"],
+    "3": ["E Archer", "E LongSpear"],
+    "4": ["E Fury", "E Flyer", "E Fury", "E Flyer", "E Fury", "E Flyer", "E Fury", "E Flyer", "E Monster Rider"],
+    "5": ["E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight"],
+    "6": ["E Flying Wizzard"],
+    "7": ["E Fury", "E Flyer", "E Fury", "E Flyer", "E Fury", "E Flyer", "E Fury", "E Flyer", "E LongSpear", "E Archer"],
+    "8": ["E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E Flying Wizzard", "E Flying Wizzard", "E Flying Wizzard", "E Flying Wizzard", "E Flying Wizzard", "E Flying Wizzard", "E Flying Wizzard"],
+    "9": ["E Racer", "E Fury", "E Flyer"],
+    "10": ["E Ogre", "E Ram", "E Flying Wizzard", "E LongSpear"],
+    "11": ["E Ram", "E Ram", "E Ram", "E Ram", "E Ram", "E Ram", "E Ram", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E Flying Wizzard", "E Fury", "E Flying Wizzard", "E Fury", "E Flying Wizzard", "E Fury", "E Flying Wizzard"]
+  },
+  "allEnemies": ["BOSS FIGHT", "E Archer", "E BarrelKnight", "E Bloodwing", "E Catapult", "E Corrupt", "E Crossbow", "E Defensive", "E Eldermole", "E Exploder", "E Firestorm", "E Flail", "E Flogre", "E Flyer", "E Flying Wizzard", "E FlyingWizzard", "E Fury", "E Ghost", "E Ghostqueen", "E Giraffeslime", "E Hunterling", "E Iron", "E LongSpear", "E Melee", "E Moleman", "E Monster Rider", "E Ogre", "E Quicksling", "E Racer", "E Ram", "E Rotary", "E Slime", "E StrongGiraffeslime", "E StrongSlime", "E Weakling", "E Wheel", "E Windboat"]
+}
