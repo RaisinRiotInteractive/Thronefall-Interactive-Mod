@@ -1,0 +1,20 @@
+# Build outputs
+bin/
+obj/
+_staging/
+
+# Packaging outputs
+*.zip
+
+# Build logs
+build.log
+
+# IDE
+.vs/
+*.user
+*.suo
+.vscode/
+
+# OS
+Thumbs.db
+.DS_Store

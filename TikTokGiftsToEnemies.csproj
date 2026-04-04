@@ -1,0 +1,106 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>TikTokGiftsToEnemies</AssemblyName>
+    <Description>Thronefall mod routing TikTok gifts to enemy spawns.</Description>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    
+    <ThronefallDir Condition="'$(ThronefallDir)' == ''">H:\SteamLibrary\steamapps\common\Thronefall</ThronefallDir>
+    <PluginDir>$(ThronefallDir)\BepInEx\plugins\TikTokGiftsToEnemies</PluginDir>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <Target Name="DeployMod" AfterTargets="Build">
+    <Copy SourceFiles="@(ReferenceCopyLocalPaths->'$(OutputPath)%(Filename)%(Extension)')" DestinationFolder="$(PluginDir)" OverwriteReadOnlyFiles="true" Condition="Exists('$(OutputPath)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(PluginDir)" OverwriteReadOnlyFiles="true" />
+    <Message Text="Mod deployed to $(PluginDir)" Importance="high" />
+  </Target>
+
+  <ItemGroup>
+    <!-- BepInEx and Harmony -->
+    <Reference Include="BepInEx">
+      <HintPath>$(ThronefallDir)\BepInEx\core\BepInEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(ThronefallDir)\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <!-- Unity -->
+    <Reference Include="UnityEngine">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <!-- Game -->
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AstarPathfindingProject">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\AstarPathfindingProject.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PackageTools">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\PackageTools.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Drawing">
+      <HintPath>$(ThronefallDir)\Thronefall_Data\Managed\Drawing.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Configurator\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="TikTokLive_Sharp" Version="1.2.3" />
+  </ItemGroup>
+
+</Project>
