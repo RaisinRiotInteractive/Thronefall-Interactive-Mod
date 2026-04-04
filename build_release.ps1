@@ -1,4 +1,4 @@
-# build_release.ps1 — builds and packages TikTokGiftsToEnemies for Thunderstore
+# build_release.ps1 — builds and packages Thronefall Interactive Mod for Thunderstore
 # Usage: .\build_release.ps1
 # Output: TikTokGiftsToEnemies-<version>.zip in the project root
 
@@ -33,9 +33,11 @@ if ($LASTEXITCODE -ne 0) { Write-Error "Configurator publish failed."; exit 1 }
 # ── Assemble staging folder ──────────────────────────────────────────────────
 $Stage      = Join-Path $Root "_staging"
 $PluginDir  = Join-Path $Stage "BepInEx\plugins\TikTokGiftsToEnemies"
+$ConfigDir  = Join-Path $Stage "BepInEx\config"
 
 if (Test-Path $Stage) { Remove-Item $Stage -Recurse -Force }
 New-Item -ItemType Directory -Path $PluginDir | Out-Null
+New-Item -ItemType Directory -Path $ConfigDir  | Out-Null
 
 Write-Host "`nAssembling package..." -ForegroundColor Cyan
 
@@ -51,6 +53,14 @@ Get-ChildItem $ModOut -File | Where-Object {
     $f = $_.Name
     -not ($ExcludePatterns | Where-Object { $f -like $_ })
 } | Copy-Item -Destination $PluginDir
+
+# Pre-populated enemy list so the Configurator works on a fresh install
+$SpawnsJson = Join-Path $Root "interactive_spawns.json"
+if (-not (Test-Path $SpawnsJson)) {
+    Write-Error "interactive_spawns.json not found. Add it to the project root."
+    exit 1
+}
+Copy-Item $SpawnsJson $ConfigDir
 
 # Configurator single-file EXE
 $CfgExe = Join-Path $Root "Configurator\bin\Release\net6.0-windows\win-x64\publish\TikTokGiftsConfigurator.exe"

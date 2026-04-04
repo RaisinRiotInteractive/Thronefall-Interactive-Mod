@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.1] - 2026-04-04
+### Fixed
+- Bundled pre-populated `interactive_spawns.json` so all enemy names are available in the Configurator on a fresh install without needing to play a level first.
+- Renamed mod to Thronefall Interactive Mod throughout (plugin name, config file, spawns file, Configurator window title).
+
 ## [1.0.0] - 2026-04-03
 ### Added
 - Initial release of Thronefall TikTok Gifts to Enemies Mod.
