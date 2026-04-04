@@ -71,7 +71,8 @@ try {
         -ContentType "application/json"
 } catch {
     $msg = $_.ErrorDetails.Message | ConvertFrom-Json -ErrorAction SilentlyContinue
-    Write-Error "Failed to create release: $($msg.message ?? $_.Exception.Message)"
+    $errMsg = if ($msg.message) { $msg.message } else { $_.Exception.Message }
+    Write-Error "Failed to create release: $errMsg"
     exit 1
 }
 
@@ -93,7 +94,8 @@ try {
         -ContentType "application/zip"
 } catch {
     $msg = $_.ErrorDetails.Message | ConvertFrom-Json -ErrorAction SilentlyContinue
-    Write-Error "Upload failed: $($msg.message ?? $_.Exception.Message)"
+    $errMsg = if ($msg.message) { $msg.message } else { $_.Exception.Message }
+    Write-Error "Upload failed: $errMsg"
     exit 1
 }
 
