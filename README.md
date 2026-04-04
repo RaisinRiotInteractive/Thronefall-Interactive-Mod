@@ -44,6 +44,8 @@ Thronefall/
 ### Standalone Configurator
 Run `TikTokGiftsConfigurator.exe` from `BepInEx/plugins/TikTokGiftsToEnemies/`. It auto-detects your config and enemy list, and lets you set up all rules with dropdowns — no manual editing needed.
 
+> **Windows SmartScreen warning?** This is expected for unsigned software with few downloads. Click **More info** then **Run anyway** to proceed. Alternatively, right-click the EXE → **Properties** → tick **Unblock** at the bottom → OK. The source code is fully available in this repository if you want to verify it.
+
 ### In-Game Panel
 Press **F9** in-game to open the connection panel where you can enter your TikTok username, connect, and adjust settings live.
 
@@ -93,6 +95,8 @@ FollowRules = 1:E Weakling:1
 ```
 
 ## Troubleshooting
+
+- **SmartScreen says the app is unsafe**: Click **More info** → **Run anyway**. Or right-click the EXE → **Properties** → tick **Unblock** → OK. This warning appears because the executable is not yet code-signed. The full source is available in this repo.
 
 - **Connection Error**: Ensure your `TikTokUsername` is correct and your Live stream is currently active.
 - **Enemies Not Spawning**: Check that you are in a level with active waves. Ensure `SpawnMode` is set correctly — if you expect immediate spawns, use `Immediate` mode.
