@@ -429,25 +429,24 @@ namespace TikTokGiftsConfigurator
         }
 
         // ── Auto-detect ──────────────────────────────────────────────────────────
-        void AutoDetectConfig()
+        // ── Build candidate Thronefall base paths (used by both auto-detect methods) ──
+        List<string> GetThronefallBasePaths()
         {
-            string cfgName = "com.raisinriotinteractive.thronefall.interactive.cfg";
-            string tail    = Path.Combine("BepInEx", "config", cfgName);
-            var paths      = new List<string>();
+            var bases = new List<string>();
 
-            // 1. Relative to EXE (lives in BepInEx/plugins/ → ../config/)
-            paths.Add(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "config", cfgName)));
+            // 1. Relative to EXE (lives in BepInEx/plugins/TikTokGiftsToEnemies/)
+            bases.Add(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..")));
 
             // 2. Steam registry — primary library
             try
             {
                 using var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam");
                 if (key?.GetValue("SteamPath") is string steamPath)
-                    paths.Add(Path.Combine(steamPath, "steamapps", "common", "Thronefall", tail));
+                    bases.Add(Path.Combine(steamPath, "steamapps", "common", "Thronefall"));
             }
             catch { }
 
-            // 3. Scan every available drive for common Steam install patterns
+            // 3. Scan every drive for common Steam install patterns
             var relPaths = new[]
             {
                 @"SteamLibrary\steamapps\common\Thronefall",
@@ -463,15 +462,42 @@ namespace TikTokGiftsConfigurator
                                                    d.DriveType == DriveType.Removable)))
             {
                 foreach (var rel in relPaths)
-                    paths.Add(Path.Combine(drive.RootDirectory.FullName, rel, tail));
+                    bases.Add(Path.Combine(drive.RootDirectory.FullName, rel));
             }
 
-            foreach (var p in paths)
+            return bases;
+        }
+
+        void AutoDetectConfig()
+        {
+            string cfgName = "com.raisinriotinteractive.thronefall.interactive.cfg";
+
+            // Always try to load enemies first so the Configurator is useful
+            // even before the game has been run and generated the cfg file.
+            AutoDetectSpawns();
+
+            foreach (var basePath in GetThronefallBasePaths())
             {
+                var p = Path.Combine(basePath, "BepInEx", "config", cfgName);
                 if (File.Exists(p))
                 {
                     _configPathBox.Text = p;
                     OnLoad(null, null);
+                    return;
+                }
+            }
+        }
+
+        void AutoDetectSpawns()
+        {
+            string spawnsName = "interactive_spawns.json";
+
+            foreach (var basePath in GetThronefallBasePaths())
+            {
+                var p = Path.Combine(basePath, "BepInEx", "config", spawnsName);
+                if (File.Exists(p))
+                {
+                    LoadSpawnInfo(p);
                     return;
                 }
             }
