@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.2] - 2026-04-04
+### Fixed
+- Configurator now loads enemy names on startup even before the game has been run for the first time (no cfg file required). Searches for `interactive_spawns.json` independently of the config file.
+
 ## [1.0.1] - 2026-04-04
 ### Fixed
 - Bundled pre-populated `interactive_spawns.json` so all enemy names are available in the Configurator on a fresh install without needing to play a level first.
