@@ -18,23 +18,46 @@ Bring your TikTok Live audience into your Thronefall kingdom! This mod spawns en
 ## Installation
 
 1. Install [BepInEx](https://thunderstore.io/c/thronefall/p/BepInEx/BepInExPack_Thronefall/) if you haven't already.
-2. Download the latest release.
-3. Extract the contents into your `Thronefall/BepInEx/plugins` folder.
-4. Run the game once to generate the config file and the `interactive_spawns.json` enemy list.
+2. Download the latest release zip.
+3. Extract the zip directly into your Thronefall game folder (the one that contains `Thronefall.exe`). The folder structure inside the zip matches exactly where everything needs to go.
+
+After extraction your Thronefall folder should look like this:
+
+```
+Thronefall/
+├── Thronefall.exe
+└── BepInEx/
+    ├── config/
+    │   ├── com.raisinriotinteractive.thronefall.interactive.cfg   ← settings (auto-generated on first run)
+    │   └── interactive_spawns.json                                ← enemy list (included in release)
+    └── plugins/
+        └── TikTokGiftsToEnemies/
+            ├── TikTokGiftsToEnemies.dll                           ← the mod
+            ├── TikTokGiftsConfigurator.exe                        ← standalone configurator
+            └── (supporting DLLs)
+```
+
+> **Note:** `com.raisinriotinteractive.thronefall.interactive.cfg` is created automatically the first time you launch the game. You do not need to create it manually.
 
 ## Usage
 
+### Standalone Configurator
+Run `TikTokGiftsConfigurator.exe` from `BepInEx/plugins/TikTokGiftsToEnemies/`. It auto-detects your config and enemy list, and lets you set up all rules with dropdowns — no manual editing needed.
+
+### In-Game Panel
+Press **F9** in-game to open the connection panel where you can enter your TikTok username, connect, and adjust settings live.
+
 ### Connecting to TikTok
-1. Open the game and press **F9**.
-2. Enter your TikTok username (e.g., `@YourName`).
-3. Click **Connect**. The status will change to "Connected" once established.
+1. Open the game (or the Configurator) and enter your TikTok username (e.g., `@YourName`).
+2. Click **Connect**. The status will change to "Connected" once established.
+3. Your Live stream must be active for the connection to work.
 
-### Configurator
-Run `TikTokGiftsConfigurator.exe` from the plugins folder. It will auto-detect your config file, load available enemy names from `interactive_spawns.json`, and let you build rules with dropdowns — no manual editing required.
+## Configuration Reference
 
-### Configuration Reference
-
-All settings are stored in `BepInEx/config/com.raisinriot.thronefall.tiktokgifts.cfg`.
+Settings are stored in:
+```
+BepInEx/config/com.raisinriotinteractive.thronefall.interactive.cfg
+```
 
 | Section | Key | Type | Default | Description |
 | :--- | :--- | :--- | :--- | :--- |
@@ -51,37 +74,30 @@ All settings are stored in `BepInEx/config/com.raisinriot.thronefall.tiktokgifts
 
 All rule fields use the format `Key:EnemyName:Count` with multiple rules separated by `;`.
 
-`EnemyName` is the prefab name from `interactive_spawns.json` — run the game once to generate this file, then open the Configurator or check it directly for valid names.
+`EnemyName` is the prefab name from `interactive_spawns.json`. The Configurator shows all available names in a dropdown.
 
 | Rule Field | Key meaning | Example |
 | :--- | :--- | :--- |
-| `GiftRules` | TikTok gift name | `Rose:E Melee:1;Lion:E Elite:2` |
-| `CoinRules` | Minimum diamonds (highest match wins) | `5:E Melee:1;50:E Elite:3;200:E Boss:5` |
-| `LikeRules` | Likes required per spawn trigger | `100:E Melee:1;500:E Elite:1` |
-| `FollowRules` | Follows required per spawn trigger | `1:E Spider Small:1` |
+| `GiftRules` | TikTok gift name | `Rose:E Melee:1;Lion:E Fury:2` |
+| `CoinRules` | Minimum diamonds (highest match wins) | `5:E Melee:1;50:E Fury:3;200:E Ogre:5` |
+| `LikeRules` | Likes required per spawn trigger | `100:E Melee:1;500:E Fury:1` |
+| `FollowRules` | Follows required per spawn trigger | `1:E Weakling:1` |
 
-#### Example
+#### Example Config
 
 ```
-GiftRules   = Rose:E Melee:1;TikTok:E Melee:1;Universe:E Boss:5
-CoinRules   = 5:E Melee:1;50:E Elite:3;200:E Boss:5
+GiftRules   = Rose:E Melee:1;TikTok:E Melee:1;Universe:E Ogre:5
+CoinRules   = 5:E Melee:1;50:E Fury:3;200:E Ogre:5
 LikeRules   = 100:E Melee:1
-FollowRules = 1:E Spider Small:1
+FollowRules = 1:E Weakling:1
 ```
-
-With these rules:
-- A **Rose** gift spawns 1 basic enemy.
-- A **Universe** gift spawns 5 boss enemies.
-- An unknown gift worth **60 diamonds** matches the `50` threshold and spawns 3 elite units.
-- Every **100 likes** spawns 1 basic enemy.
-- Every **follow** spawns a small spider.
 
 ## Troubleshooting
 
 - **Connection Error**: Ensure your `TikTokUsername` is correct and your Live stream is currently active.
 - **Enemies Not Spawning**: Check that you are in a level with active waves. Ensure `SpawnMode` is set correctly — if you expect immediate spawns, use `Immediate` mode.
-- **Enemy Name Not Found**: Run the game and play a level to generate `interactive_spawns.json` in `BepInEx/config/`. Open the Configurator to browse valid enemy names for the current map. Enemy availability varies by map and wave.
-- **Rules Not Applying**: Verify the format in your rule fields. Ensure there are no trailing semicolons and that the enemy name matches exactly what's in `interactive_spawns.json`.
+- **Configurator shows no enemies**: Make sure `interactive_spawns.json` is in `BepInEx/config/`. It is included in the release zip — re-extract if missing.
+- **Rules Not Applying**: Verify the format in your rule fields. Ensure there are no trailing semicolons and that the enemy name matches exactly what is shown in the Configurator dropdown.
 
 ## Credits
 
