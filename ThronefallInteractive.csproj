@@ -97,6 +97,7 @@
 
   <ItemGroup>
     <Compile Remove="Configurator\**" />
+    <Compile Remove="Installer\**" />
   </ItemGroup>
 
   <ItemGroup>
