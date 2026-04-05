@@ -6,17 +6,18 @@
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
-    <AssemblyName>TikTokGiftsToEnemies</AssemblyName>
+    <AssemblyName>ThronefallInteractive</AssemblyName>
     <Description>Thronefall mod routing TikTok gifts to enemy spawns.</Description>
     <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    
+
     <ThronefallDir Condition="'$(ThronefallDir)' == ''">H:\SteamLibrary\steamapps\common\Thronefall</ThronefallDir>
-    <PluginDir>$(ThronefallDir)\BepInEx\plugins\TikTokGiftsToEnemies</PluginDir>
+    <PluginDir>$(ThronefallDir)\BepInEx\plugins\ThronefallInteractive</PluginDir>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <Target Name="DeployMod" AfterTargets="Build">
+    <MakeDir Directories="$(PluginDir)" />
     <Copy SourceFiles="@(ReferenceCopyLocalPaths->'$(OutputPath)%(Filename)%(Extension)')" DestinationFolder="$(PluginDir)" OverwriteReadOnlyFiles="true" Condition="Exists('$(OutputPath)%(Filename)%(Extension)')" />
     <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(PluginDir)" OverwriteReadOnlyFiles="true" />
     <Message Text="Mod deployed to $(PluginDir)" Importance="high" />

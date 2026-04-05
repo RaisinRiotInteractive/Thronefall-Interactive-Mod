@@ -4,7 +4,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <Nullable>disable</Nullable>
-    <AssemblyName>TikTokGiftsConfigurator</AssemblyName>
+    <AssemblyName>ThronefallInteractiveConfigurator</AssemblyName>
 
     <!-- Single-file self-contained so no .NET install needed -->
     <PublishSingleFile>true</PublishSingleFile>
@@ -13,11 +13,11 @@
     <PublishReadyToRun>false</PublishReadyToRun>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 
-    <ThronefallPlugins Condition="'$(ThronefallPlugins)' == ''">H:\SteamLibrary\steamapps\common\Thronefall\BepInEx\plugins\TikTokGiftsToEnemies</ThronefallPlugins>
+    <ThronefallPlugins Condition="'$(ThronefallPlugins)' == ''">H:\SteamLibrary\steamapps\common\Thronefall\BepInEx\plugins\ThronefallInteractive</ThronefallPlugins>
   </PropertyGroup>
 
   <Target Name="DeployConfigurator" AfterTargets="Publish">
-    <Copy SourceFiles="$(PublishDir)TikTokGiftsConfigurator.exe"
+    <Copy SourceFiles="$(PublishDir)ThronefallInteractiveConfigurator.exe"
           DestinationFolder="$(ThronefallPlugins)"
           OverwriteReadOnlyFiles="true" />
     <Message Text="Configurator deployed to $(ThronefallPlugins)" Importance="high" />

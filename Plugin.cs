@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TikTokGiftsToEnemies
 {
-    [BepInPlugin("com.raisinriotinteractive.thronefall.interactive", "Thronefall Interactive Mod", "1.0.5")]
+    [BepInPlugin("com.raisinriotinteractive.thronefall.interactive", "ThronefallInteractive", "1.0.5")]
     public class TikTokGiftsPlugin : BaseUnityPlugin
     {
         public static TikTokGiftsPlugin Instance { get; private set; }

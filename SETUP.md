@@ -20,9 +20,9 @@ Thronefall/
     │   ├── com.raisinriotinteractive.thronefall.interactive.cfg   ← settings
     │   └── interactive_spawns.json                                ← enemy list
     └── plugins/
-        └── TikTokGiftsToEnemies/
-            ├── TikTokGiftsToEnemies.dll                           ← the mod
-            ├── TikTokGiftsConfigurator.exe                        ← standalone configurator
+        └── ThronefallInteractive/
+            ├── ThronefallInteractive.dll                           ← the mod
+            ├── ThronefallInteractiveConfigurator.exe                        ← standalone configurator
             └── (supporting DLLs)
 ```
 
@@ -32,7 +32,7 @@ Thronefall/
 
 ### Using the Standalone Configurator (Recommended)
 
-Run `TikTokGiftsConfigurator.exe` from `BepInEx/plugins/TikTokGiftsToEnemies/`. It auto-detects your config and enemy list and lets you set up all rules with dropdowns — no manual editing needed.
+Run `ThronefallInteractiveConfigurator.exe` from `BepInEx/plugins/ThronefallInteractive/`. It auto-detects your config and enemy list and lets you set up all rules with dropdowns — no manual editing needed.
 
 > **Windows SmartScreen warning?** Click **More info** then **Run anyway**. Alternatively, right-click the EXE → **Properties** → tick **Unblock** → OK. The full source code is available in this repository.
 

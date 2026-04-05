@@ -12,7 +12,7 @@ Bring your TikTok Live audience into your Thronefall kingdom! This mod spawns en
   - **Immediate (Default)**: Gifts spawn enemies instantly, regardless of day or night.
   - **NightAware**: Gifts sent during the day are queued and released when night begins. Gifts sent at night spawn immediately.
 - **In-Game UI**: Press **F9** to open the connection panel and live configuration.
-- **Standalone Configurator**: Use `TikTokGiftsConfigurator.exe` for easy setup without opening the game.
+- **Standalone Configurator**: Use `ThronefallInteractiveConfigurator.exe` for easy setup without opening the game.
 
 ## Installation
 
@@ -30,15 +30,15 @@ Thronefall/
     │   ├── com.raisinriotinteractive.thronefall.interactive.cfg   ← settings
     │   └── interactive_spawns.json                                ← enemy list
     └── plugins/
-        └── TikTokGiftsToEnemies/
-            ├── TikTokGiftsToEnemies.dll                           ← the mod
-            ├── TikTokGiftsConfigurator.exe                        ← standalone configurator
+        └── ThronefallInteractive/
+            ├── ThronefallInteractive.dll                           ← the mod
+            ├── ThronefallInteractiveConfigurator.exe                        ← standalone configurator
             └── (supporting DLLs)
 ```
 
 ### Setup
 
-Run `TikTokGiftsConfigurator.exe` from `BepInEx/plugins/TikTokGiftsToEnemies/` to configure the mod — enter your TikTok username, map gifts to enemies, and set your spawn preferences. No need to launch the game first.
+Run `ThronefallInteractiveConfigurator.exe` from `BepInEx/plugins/ThronefallInteractive/` to configure the mod — enter your TikTok username, map gifts to enemies, and set your spawn preferences. No need to launch the game first.
 
 > **Windows SmartScreen warning?** Click **More info** then **Run anyway**. Or right-click the EXE → **Properties** → tick **Unblock** → OK.
 

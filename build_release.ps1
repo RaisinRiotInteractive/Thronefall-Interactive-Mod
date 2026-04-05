@@ -1,6 +1,6 @@
 # build_release.ps1 — builds and packages Thronefall Interactive Mod for Thunderstore
 # Usage: .\build_release.ps1
-# Output: TikTokGiftsToEnemies-<version>.zip in the project root
+# Output: ThronefallInteractive-<version>.zip in the project root
 
 param(
     [string]$Version = ""
@@ -10,8 +10,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $Root      = $PSScriptRoot
-$ModCsproj = Join-Path $Root "TikTokGiftsToEnemies.csproj"
-$CfgCsproj = Join-Path $Root "Configurator\TikTokGiftsConfigurator.csproj"
+$ModCsproj = Join-Path $Root "ThronefallInteractive.csproj"
+$CfgCsproj = Join-Path $Root "Configurator\ThronefallInteractiveConfigurator.csproj"
 
 # ── Resolve version ──────────────────────────────────────────────────────────
 if (-not $Version) {
@@ -32,7 +32,7 @@ if ($LASTEXITCODE -ne 0) { Write-Error "Configurator publish failed."; exit 1 }
 
 # ── Assemble staging folder ──────────────────────────────────────────────────
 $Stage      = Join-Path $Root "_staging"
-$PluginDir  = Join-Path $Stage "BepInEx\plugins\TikTokGiftsToEnemies"
+$PluginDir  = Join-Path $Stage "BepInEx\plugins\ThronefallInteractive"
 $ConfigDir  = Join-Path $Stage "BepInEx\config"
 
 if (Test-Path $Stage) { Remove-Item $Stage -Recurse -Force }
@@ -71,7 +71,7 @@ if (-not (Test-Path $DefaultCfg)) {
 Copy-Item $DefaultCfg $ConfigDir
 
 # Configurator single-file EXE
-$CfgExe = Join-Path $Root "Configurator\bin\Release\net6.0-windows\win-x64\publish\TikTokGiftsConfigurator.exe"
+$CfgExe = Join-Path $Root "Configurator\bin\Release\net6.0-windows\win-x64\publish\ThronefallInteractiveConfigurator.exe"
 if (-not (Test-Path $CfgExe)) {
     Write-Error "Configurator EXE not found at: $CfgExe"
     exit 1
