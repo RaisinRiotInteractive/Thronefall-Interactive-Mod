@@ -21,6 +21,28 @@ Bring your TikTok Live audience into your Thronefall kingdom! This mod spawns en
 2. Download the latest release zip from the [Releases](https://github.com/RaisinRiotInteractive/Thronefall-Interactive-Mod/releases/latest) page.
 3. Extract the zip directly into your Thronefall game folder (the one containing `Thronefall.exe`).
 
+After extraction your Thronefall folder should look like this:
+
+```
+Thronefall/
+├── Thronefall.exe
+└── BepInEx/
+    ├── config/
+    │   ├── com.raisinriotinteractive.thronefall.interactive.cfg   ← settings
+    │   └── interactive_spawns.json                                ← enemy list
+    └── plugins/
+        └── TikTokGiftsToEnemies/
+            ├── TikTokGiftsToEnemies.dll                           ← the mod
+            ├── TikTokGiftsConfigurator.exe                        ← standalone configurator
+            └── (supporting DLLs)
+```
+
+### Setup
+
+Run `TikTokGiftsConfigurator.exe` from `BepInEx/plugins/TikTokGiftsToEnemies/` to configure the mod — enter your TikTok username, map gifts to enemies, and set your spawn preferences. No need to launch the game first.
+
+> **Windows SmartScreen warning?** Click **More info** then **Run anyway**. Or right-click the EXE → **Properties** → tick **Unblock** → OK.
+
 For a full setup guide including TikTok connection, rule configuration, and troubleshooting, see the [Setup Guide](SETUP.md).
 
 ## Credits
