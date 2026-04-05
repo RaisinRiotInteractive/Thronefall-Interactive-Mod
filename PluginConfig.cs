@@ -36,9 +36,9 @@ namespace TikTokGiftsToEnemies
             AutoConnect = config.Bind("General", "AutoConnect", false,
                 "Automatically connect on game start");
 
-            SpawnMode = config.Bind("General", "SpawnMode", "NightAware",
+            SpawnMode = config.Bind("General", "SpawnMode", "Immediate",
                 "When to spawn gifted enemies.\n" +
-                "  Immediate  - spawn instantly regardless of day/night\n" +
+                "  Immediate  - spawn instantly regardless of day/night (default)\n" +
                 "  Queue      - always hold until the next night wave\n" +
                 "  NightAware - spawn immediately at night, queue during day");
 
@@ -63,10 +63,11 @@ namespace TikTokGiftsToEnemies
                 "Format: LikesPerSpawn:PrefabName:Count separated by ;\n" +
                 "Example: 100:E Melee:1;500:E Elite:1");
 
-            FollowRules = config.Bind("Rules", "FollowRules", "1:E Spider Small:1",
-                "Map follows to monster spawns.\n" +
-                "Format: FollowsPerSpawn:PrefabName:Count separated by ;\n" +
-                "Example: 1:E Spider Small:1");
+            FollowRules = config.Bind("Rules", "FollowRules", "1:E Small Spider:1",
+                "Map new followers to monster spawns (based on stream total this session).\n" +
+                "Format: TotalFollowsPerSpawn:PrefabName:Count separated by ;\n" +
+                "Example: 1:E Small Spider:1  (spawn every new follower)\n" +
+                "         5:E Fury:1           (spawn every 5th new follower)");
         }
     }
 }

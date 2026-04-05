@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.3] - 2026-04-05
+### Fixed
+- Follow rules now trigger based on stream-wide total followers (e.g. every N new followers) instead of per-user, which was always 1 and never useful.
+- Default follow rule corrected from `E Spider Small` to `E Small Spider` (prefab name was swapped).
+- Removed debug reflection logging that spammed BepInEx logs on every follow, gift, and like event.
+- Config tab hint text updated to show correct `PrefabName` format (was incorrectly showing `SpawnIndex`).
+- `SmallStyle()` now cached to avoid allocating a new GUIStyle every frame.
+- Configurator deploy target now correctly installs to `plugins/TikTokGiftsToEnemies/` subfolder.
+- Added `E Small Spider` to bundled enemy list.
+- Added Hide button to in-game panel with F9 restore reminder.
+- Spawn mode default changed to `Immediate`.
+- `.claude/` added to `.gitignore`.
+
 ## [1.0.2] - 2026-04-04
 ### Fixed
 - Configurator now loads enemy names on startup even before the game has been run for the first time (no cfg file required). Searches for `interactive_spawns.json` independently of the config file.

@@ -29,7 +29,10 @@ namespace TikTokGiftsToEnemies
         private string   _debugCountInput = "1";
         private string[] _debugEnemyNames = System.Array.Empty<string>();
 
-        private static readonly string[] SpawnModeLabels = { "NightAware (default)", "Immediate", "Queue" };
+        // Cached styles
+        private GUIStyle _smallStyle;
+
+        private static readonly string[] SpawnModeLabels = { "NightAware", "Immediate (default)", "Queue" };
         private static readonly string[] SpawnModeValues = { "NightAware", "Immediate", "Queue" };
 
         void Awake()
@@ -119,6 +122,10 @@ namespace TikTokGiftsToEnemies
                 PluginConfig.TikTokUsername.Value = newUser;
             }
 
+            GUILayout.Space(4);
+            if (GUILayout.Button("Hide (press F9 to restore)"))
+                _showPanel = false;
+
             GUILayout.Space(8);
 
             if (TikTokConnectionManager.Instance != null)
@@ -138,14 +145,14 @@ namespace TikTokGiftsToEnemies
         {
             _configScroll = GUILayout.BeginScrollView(_configScroll, GUILayout.Height(240));
 
-            GUILayout.Label("── Gift Rules  (GiftName:SpawnIndex:Count) ──");
-            GUILayout.Label("e.g.  Rose:0:1;Lion:1:2;Universe:2:5", SmallStyle());
+            GUILayout.Label("── Gift Rules  (GiftName:PrefabName:Count) ──");
+            GUILayout.Label("e.g.  Rose:E Melee:1;Lion:E Fury:2;Universe:E Ogre:5", SmallStyle());
             _giftRules = GUILayout.TextArea(_giftRules, GUILayout.MinHeight(50));
 
             GUILayout.Space(8);
 
-            GUILayout.Label("── Coin Rules  (MinDiamonds:SpawnIndex:Count) ──");
-            GUILayout.Label("e.g.  5:0:1;50:1:3;200:2:5   (highest match wins)", SmallStyle());
+            GUILayout.Label("── Coin Rules  (MinDiamonds:PrefabName:Count) ──");
+            GUILayout.Label("e.g.  5:E Melee:1;50:E Fury:3;200:E Ogre:5   (highest match wins)", SmallStyle());
             _coinRules = GUILayout.TextArea(_coinRules, GUILayout.MinHeight(50));
 
             GUILayout.Space(8);
@@ -156,8 +163,8 @@ namespace TikTokGiftsToEnemies
 
             GUILayout.Space(8);
 
-            GUILayout.Label("── Follow Rules  (FollowsPerSpawn:PrefabName:Count) ──");
-            GUILayout.Label("e.g.  1:E Spider Small:1", SmallStyle());
+            GUILayout.Label("── Follow Rules  (StreamTotalPerSpawn:PrefabName:Count) ──");
+            GUILayout.Label("e.g.  1:E Small Spider:1  (every new follower spawns one)", SmallStyle());
             _followRules = GUILayout.TextArea(_followRules, GUILayout.MinHeight(50));
 
             GUILayout.Space(8);
@@ -261,10 +268,13 @@ namespace TikTokGiftsToEnemies
 
         GUIStyle SmallStyle()
         {
-            var s = new GUIStyle(GUI.skin.label);
-            s.fontSize = 10;
-            s.normal.textColor = Color.gray;
-            return s;
+            if (_smallStyle == null)
+            {
+                _smallStyle = new GUIStyle(GUI.skin.label);
+                _smallStyle.fontSize = 10;
+                _smallStyle.normal.textColor = Color.gray;
+            }
+            return _smallStyle;
         }
     }
 }

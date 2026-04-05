@@ -96,7 +96,7 @@ namespace TikTokGiftsToEnemies
             return requests;
         }
 
-        public List<EnemySpawnRequest> MapFollow(User sender)
+        public List<EnemySpawnRequest> MapFollow(long totalFollows, long lastProcessedFollows, User sender)
         {
             var requests = new List<EnemySpawnRequest>();
             string name = sender?.NickName ?? "Follower";
@@ -105,15 +105,25 @@ namespace TikTokGiftsToEnemies
 
             foreach (var rule in FindFollowRules())
             {
-                requests.Add(new EnemySpawnRequest
+                long threshold = rule.follows;
+                if (threshold <= 0) continue;
+
+                long timesBefore = lastProcessedFollows / threshold;
+                long timesNow    = totalFollows / threshold;
+                long newSpawns   = timesNow - timesBefore;
+
+                if (newSpawns > 0)
                 {
-                    PrefabName = rule.prefabName,
-                    Count      = rule.count,
-                    SenderName = name,
-                    GiftName   = "Follow",
-                    TotalDiamonds = 0,
-                    ProfilePicUrl = picUrl
-                });
+                    requests.Add(new EnemySpawnRequest
+                    {
+                        PrefabName    = rule.prefabName,
+                        Count         = (int)(rule.count * newSpawns),
+                        SenderName    = name,
+                        GiftName      = "Follow",
+                        TotalDiamonds = 0,
+                        ProfilePicUrl = picUrl
+                    });
+                }
             }
 
             return requests;
@@ -126,42 +136,35 @@ namespace TikTokGiftsToEnemies
             try
             {
                 var type = sender.GetType();
-                TikTokGiftsPlugin.Instance.Logger.LogInfo($"[AvatarDebug] Inspecting {type.FullName} for {sender.NickName}");
 
-                // 1. Check Properties
                 foreach (var p in type.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
                 {
                     try
                     {
                         var val = p.GetValue(sender);
                         if (val == null) continue;
-                        
                         string url = ExtractUrlFromObject(val, p.Name);
                         if (url != null) return url;
                     }
                     catch { }
                 }
 
-                // 2. Check Fields (some libraries use public fields)
                 foreach (var f in type.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
                 {
                     try
                     {
                         var val = f.GetValue(sender);
                         if (val == null) continue;
-
                         string url = ExtractUrlFromObject(val, f.Name);
                         if (url != null) return url;
                     }
                     catch { }
                 }
 
-                TikTokGiftsPlugin.Instance.Logger.LogInfo("[AvatarDebug] No avatar found in properties or fields.");
                 return null;
             }
-            catch (Exception ex)
+            catch
             {
-                TikTokGiftsPlugin.Instance.Logger.LogWarning($"[AvatarDebug] Error: {ex.Message}");
                 return null;
             }
         }
@@ -180,33 +183,18 @@ namespace TikTokGiftsToEnemies
                     {
                         if (string.IsNullOrEmpty(u)) continue;
                         string cleanUrl = u.StartsWith("//") ? "https:" + u : u;
-                        
-                        // If we find a non-webp URL, return it immediately
                         if (!cleanUrl.ToLower().Contains(".webp"))
-                        {
-                            TikTokGiftsPlugin.Instance.Logger.LogInfo($"[AvatarDebug] Found non-WebP URL in {memberName}: {cleanUrl}");
                             return cleanUrl;
-                        }
-                        
                         if (fallback == null) fallback = cleanUrl;
                     }
-                    // If we only found WebP, return the first one but DON'T rename it (breaks signature)
-                    if (fallback != null)
-                    {
-                        TikTokGiftsPlugin.Instance.Logger.LogInfo($"[AvatarDebug] Only WebP found in {memberName}, using original: {fallback}");
-                        return fallback;
-                    }
+                    if (fallback != null) return fallback;
                 }
             }
-            // If it's a string
             else if (val is string s)
             {
                 string cleanS = s.StartsWith("//") ? "https:" + s : s;
                 if (cleanS.StartsWith("http") && (memberName.Contains("Avatar") || memberName.Contains("Image") || memberName.Contains("Profile")))
-                {
-                    TikTokGiftsPlugin.Instance.Logger.LogInfo($"[AvatarDebug] Found URL string ({memberName}): {cleanS}");
                     return cleanS;
-                }
             }
             return null;
         }

@@ -20,6 +20,8 @@ namespace TikTokGiftsToEnemies
         private long _totalLikes = 0;
         private long _lastProcessedLikes = 0;
         private ConcurrentDictionary<string, long> _userLikes = new ConcurrentDictionary<string, long>();
+        private long _totalFollows = 0;
+        private long _lastProcessedFollows = 0;
 
         public bool IsConnected => _client != null && _client.Connected;
         public string ConnectionStatus { get; private set; } = "Disconnected";
@@ -124,37 +126,23 @@ namespace TikTokGiftsToEnemies
         {
             try
             {
-                // ── Debug: Inspect the follow object ───────────────────────
-                var type = follow.GetType();
-                TikTokGiftsPlugin.Instance.Logger.LogInfo($"[Follow] Inspecting {type.FullName}...");
-                foreach (var m in type.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic))
-                {
-                    TikTokGiftsPlugin.Instance.Logger.LogInfo($"[Follow] Property: {m.Name}");
-                }
-                foreach (var f in type.GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic))
-                {
-                    TikTokGiftsPlugin.Instance.Logger.LogInfo($"[Follow] Field: {f.Name}");
-                }
-                // ──────────────────────────────────────────────────────────
-
-                // Based on common library patterns, it might be 'User' instead of 'Sender'
                 User user = null;
                 try { user = follow.User; } catch { }
                 if (user == null) try { user = follow.Sender; } catch { }
-                
+
                 string name = user?.NickName ?? "unknown";
-                TikTokGiftsPlugin.Instance.Logger.LogInfo(
-                    $"[Follow] New follower received: {name}");
+                long total  = System.Threading.Interlocked.Increment(ref _totalFollows);
+                long before = _lastProcessedFollows;
 
-                var requests = _mapper.MapFollow(user);
                 TikTokGiftsPlugin.Instance.Logger.LogInfo(
-                    $"[Follow] Mapped to {requests.Count} spawn requests.");
+                    $"[Follow] New follower: {name} (stream total: {total})");
 
-                foreach (var request in requests)
+                var requests = _mapper.MapFollow(total, before, user);
+                if (requests.Count > 0)
                 {
-                    TikTokGiftsPlugin.Instance.Logger.LogInfo(
-                        $"[Follow] Enqueue spawn: prefab='{request.PrefabName}' count={request.Count} for {name}");
-                    _spawnQueue.Enqueue(request);
+                    _lastProcessedFollows = total;
+                    foreach (var request in requests)
+                        _spawnQueue.Enqueue(request);
                 }
             }
             catch (System.Exception ex)

@@ -9,6 +9,9 @@ _staging/
 # Build logs
 build.log
 
+# Claude Code
+.claude/
+
 # IDE
 .vs/
 *.user

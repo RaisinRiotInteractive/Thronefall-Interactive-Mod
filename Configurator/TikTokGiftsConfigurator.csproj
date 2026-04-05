@@ -13,7 +13,7 @@
     <PublishReadyToRun>false</PublishReadyToRun>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 
-    <ThronefallPlugins Condition="'$(ThronefallPlugins)' == ''">H:\SteamLibrary\steamapps\common\Thronefall\BepInEx\plugins</ThronefallPlugins>
+    <ThronefallPlugins Condition="'$(ThronefallPlugins)' == ''">H:\SteamLibrary\steamapps\common\Thronefall\BepInEx\plugins\TikTokGiftsToEnemies</ThronefallPlugins>
   </PropertyGroup>
 
   <Target Name="DeployConfigurator" AfterTargets="Publish">
