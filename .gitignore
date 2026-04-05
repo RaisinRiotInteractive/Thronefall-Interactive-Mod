@@ -21,3 +21,6 @@ build.log
 # OS
 Thumbs.db
 .DS_Store
+
+# Screenshots
+screenshots/
