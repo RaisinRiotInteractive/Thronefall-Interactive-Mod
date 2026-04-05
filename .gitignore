@@ -5,6 +5,7 @@ _staging/
 
 # Packaging outputs
 *.zip
+ThronefallInteractive-Installer.exe
 
 # Build logs
 build.log

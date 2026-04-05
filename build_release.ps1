@@ -12,6 +12,7 @@ $ErrorActionPreference = "Stop"
 $Root      = $PSScriptRoot
 $ModCsproj = Join-Path $Root "ThronefallInteractive.csproj"
 $CfgCsproj = Join-Path $Root "Configurator\ThronefallInteractiveConfigurator.csproj"
+$InsCsproj = Join-Path $Root "Installer\ThronefallInteractiveInstaller.csproj"
 
 # ── Resolve version ──────────────────────────────────────────────────────────
 if (-not $Version) {
@@ -29,6 +30,11 @@ if ($LASTEXITCODE -ne 0) { Write-Error "Mod build failed."; exit 1 }
 Write-Host "`nPublishing configurator..." -ForegroundColor Cyan
 dotnet publish $CfgCsproj -c Release -r win-x64 --self-contained true --nologo -v quiet
 if ($LASTEXITCODE -ne 0) { Write-Error "Configurator publish failed."; exit 1 }
+
+# ── Publish installer (self-contained, single-file) ──────────────────────────
+Write-Host "`nPublishing installer..." -ForegroundColor Cyan
+dotnet publish $InsCsproj -c Release -r win-x64 --self-contained true --nologo -v quiet
+if ($LASTEXITCODE -ne 0) { Write-Error "Installer publish failed."; exit 1 }
 
 # ── Assemble staging folder ──────────────────────────────────────────────────
 $Stage      = Join-Path $Root "_staging"
@@ -78,6 +84,14 @@ if (-not (Test-Path $CfgExe)) {
 }
 Copy-Item $CfgExe $PluginDir
 
+# Installer single-file EXE (copied to staging root so it's easy to find)
+$InsExe = Join-Path $Root "Installer\bin\Release\net6.0-windows\win-x64\publish\ThronefallInteractiveInstaller.exe"
+if (-not (Test-Path $InsExe)) {
+    Write-Error "Installer EXE not found at: $InsExe"
+    exit 1
+}
+Copy-Item $InsExe $Stage
+
 # ── Zip ──────────────────────────────────────────────────────────────────────
 $ZipName = "Thronefall-Interactive-Mod-$Version.zip"
 $ZipPath = Join-Path $Root $ZipName
@@ -86,6 +100,9 @@ if (Test-Path $ZipPath) { Remove-Item $ZipPath -Force }
 
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 [System.IO.Compression.ZipFile]::CreateFromDirectory($Stage, $ZipPath)
+
+# Also copy installer as a standalone file for direct download
+Copy-Item $InsExe (Join-Path $Root "ThronefallInteractive-Installer.exe") -Force
 
 Remove-Item $Stage -Recurse -Force
 
