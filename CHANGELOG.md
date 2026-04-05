@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.7] - 2026-04-05
+### Changed
+- Username is now automatically converted to lowercase in both the in-game panel and Configurator
+- Removed Queue spawn mode from Configurator; Immediate is now the default selection
+- Removed E Eldermole from enemy list
+
 ## [1.0.6] - 2026-04-05
 ### Changed
 - Renamed plugin, DLL, and Configurator to ThronefallInteractive / ThronefallInteractiveConfigurator

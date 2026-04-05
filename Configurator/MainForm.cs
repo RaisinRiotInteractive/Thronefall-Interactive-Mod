@@ -27,7 +27,7 @@ namespace TikTokGiftsConfigurator
         private string _configPath = "";
         private List<string> _enemyNames    = new List<string>();   // from spawns JSON
         private List<string> _tiktokGifts   = new List<string>();   // fetched from TikTok
-        private static readonly string[] SpawnModeValues = { "NightAware", "Immediate", "Queue" };
+        private static readonly string[] SpawnModeValues = { "NightAware", "Immediate" };
 
         // ── Constructor ─────────────────────────────────────────────────────────
         public MainForm()
@@ -197,8 +197,8 @@ namespace TikTokGiftsConfigurator
                 Width         = 200,
                 Margin        = new Padding(4, 2, 0, 0)
             };
-            _spawnModeCombo.Items.AddRange(new object[] { "NightAware (default)", "Immediate", "Queue" });
-            _spawnModeCombo.SelectedIndex = 0;
+            _spawnModeCombo.Items.AddRange(new object[] { "NightAware", "Immediate (default)" });
+            _spawnModeCombo.SelectedIndex = 1;
             miscPanel.Controls.Add(_spawnModeCombo);
             root.Controls.Add(miscPanel, 0, 6);
 
@@ -616,9 +616,9 @@ namespace TikTokGiftsConfigurator
             _notifCheck.Checked = cfg.GetValueOrDefault("General.ShowOnScreenNotifications", "true")
                                      .Trim().Equals("true", StringComparison.OrdinalIgnoreCase);
 
-            string mode   = cfg.GetValueOrDefault("General.SpawnMode", "NightAware");
+            string mode   = cfg.GetValueOrDefault("General.SpawnMode", "Immediate");
             int    modeIdx = Array.FindIndex(SpawnModeValues, v => v.Equals(mode, StringComparison.OrdinalIgnoreCase));
-            _spawnModeCombo.SelectedIndex = modeIdx < 0 ? 0 : modeIdx;
+            _spawnModeCombo.SelectedIndex = modeIdx < 0 ? 1 : modeIdx;
         }
 
         void LoadSpawnInfo(string jsonPath)
@@ -689,7 +689,7 @@ namespace TikTokGiftsConfigurator
             try
             {
                 var cfg = ReadConfig(_configPath);
-                cfg["General.TikTokUsername"]             = _usernameBox.Text.Trim();
+                cfg["General.TikTokUsername"]             = _usernameBox.Text.Trim().ToLower();
                 cfg["Rules.GiftRules"]                   = SerialiseGrid(_giftGrid);
                 cfg["Rules.CoinRules"]                   = SerialiseGrid(_coinGrid);
                 cfg["Rules.LikeRules"]                   = SerialiseGrid(_likeGrid);

@@ -116,7 +116,7 @@ namespace TikTokGiftsToEnemies
         void DrawConnectTab()
         {
             GUILayout.Label("TikTok Username:");
-            string newUser = GUILayout.TextField(_usernameInput);
+            string newUser = GUILayout.TextField(_usernameInput).ToLower();
             if (newUser != _usernameInput)
             {
                 _usernameInput = newUser;

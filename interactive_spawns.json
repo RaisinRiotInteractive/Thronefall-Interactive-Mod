@@ -13,5 +13,5 @@
     "10": ["E Ogre", "E Ram", "E Flying Wizzard", "E LongSpear"],
     "11": ["E Ram", "E Ram", "E Ram", "E Ram", "E Ram", "E Ram", "E Ram", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E BarrelKnight", "E Flying Wizzard", "E Fury", "E Flying Wizzard", "E Fury", "E Flying Wizzard", "E Fury", "E Flying Wizzard"]
   },
-  "allEnemies": ["E Archer", "E BarrelKnight", "E Bloodwing", "E Catapult", "E Crossbow", "E Eldermole", "E Exploder", "E Flail", "E Flogre", "E Flyer", "E Flying Wizzard", "E Fury", "E Ghost", "E Giraffeslime", "E Hunterling", "E LongSpear", "E Melee", "E Moleman", "E Monster Rider", "E Ogre", "E Quicksling", "E Racer", "E Ram", "E Slime", "E Small Spider", "E StrongGiraffeslime", "E StrongSlime", "E Weakling", "E Wheel", "E Windboat"]
+  "allEnemies": ["E Archer", "E BarrelKnight", "E Bloodwing", "E Catapult", "E Crossbow", "E Exploder", "E Flail", "E Flogre", "E Flyer", "E Flying Wizzard", "E Fury", "E Ghost", "E Giraffeslime", "E Hunterling", "E LongSpear", "E Melee", "E Moleman", "E Monster Rider", "E Ogre", "E Quicksling", "E Racer", "E Ram", "E Slime", "E Small Spider", "E StrongGiraffeslime", "E StrongSlime", "E Weakling", "E Wheel", "E Windboat"]
 }
