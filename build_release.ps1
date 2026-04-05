@@ -62,6 +62,14 @@ if (-not (Test-Path $SpawnsJson)) {
 }
 Copy-Item $SpawnsJson $ConfigDir
 
+# Default config so users don't need to launch the game first
+$DefaultCfg = Join-Path $Root "com.raisinriotinteractive.thronefall.interactive.cfg"
+if (-not (Test-Path $DefaultCfg)) {
+    Write-Error "Default cfg not found. Add com.raisinriotinteractive.thronefall.interactive.cfg to the project root."
+    exit 1
+}
+Copy-Item $DefaultCfg $ConfigDir
+
 # Configurator single-file EXE
 $CfgExe = Join-Path $Root "Configurator\bin\Release\net6.0-windows\win-x64\publish\TikTokGiftsConfigurator.exe"
 if (-not (Test-Path $CfgExe)) {
