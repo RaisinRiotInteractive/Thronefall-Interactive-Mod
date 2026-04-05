@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.5] - 2026-04-05
+### Added
+- Bundled default `com.raisinriotinteractive.thronefall.interactive.cfg` in the release zip so users don't need to launch the game before configuring
+
 ## [1.0.4] - 2026-04-05
 ### Changed
 - Debug tab in F9 panel now reads directly from `interactive_spawns.json` instead of the prefab cache, so it reflects only the curated enemy list
