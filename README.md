@@ -11,7 +11,6 @@ Bring your TikTok Live audience into your Thronefall kingdom! This mod spawns en
 - **Spawn Modes**:
   - **Immediate (Default)**: Gifts spawn enemies instantly, regardless of day or night.
   - **NightAware**: Gifts sent during the day are queued and released when night begins. Gifts sent at night spawn immediately.
-  - **Queue**: All gifts are queued for the next upcoming night.
 - **In-Game UI**: Press **F9** to open the connection panel and live configuration.
 - **Standalone Configurator**: Use `TikTokGiftsConfigurator.exe` for easy setup without opening the game.
 

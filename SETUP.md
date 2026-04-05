@@ -78,7 +78,6 @@ FollowRules = 1:E Small Spider:1
 | :--- | :--- |
 | **Immediate** (default) | Enemies spawn instantly when a gift is received |
 | **NightAware** | Queued during the day, released at the start of the next night |
-| **Queue** | Always held until the next night wave |
 
 ---
 
@@ -93,7 +92,7 @@ BepInEx/config/com.raisinriotinteractive.thronefall.interactive.cfg
 | :--- | :--- | :--- | :--- | :--- |
 | General | `TikTokUsername` | string | | Your TikTok unique ID (with or without @). |
 | General | `AutoConnect` | bool | `false` | Automatically connect to TikTok on game start. |
-| General | `SpawnMode` | string | `Immediate` | When to spawn enemies: `Immediate`, `Queue`, or `NightAware`. |
+| General | `SpawnMode` | string | `Immediate` | When to spawn enemies: `Immediate` or `NightAware`. |
 | General | `ShowOnScreenNotifications` | bool | `true` | Show on-screen popup when a gift is received. |
 | Rules | `GiftRules` | string | | Map specific gift names to spawns. |
 | Rules | `CoinRules` | string | | Map diamond totals to spawns (fallback when no gift name matches). |
