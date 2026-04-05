@@ -382,19 +382,42 @@ namespace ThronefallInteractiveInstaller
             return ms.ToArray();
         }
 
+        // Thunderstore metadata files that should never be extracted to the game folder
+        static readonly HashSet<string> ThunderstoreMetaFiles = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "manifest.json", "icon.png", "README.md", "CHANGELOG.md", "SETUP.md",
+            "ThronefallInteractiveInstaller.exe"
+        };
+
         void ExtractZipToFolder(byte[] zipBytes, string destinationFolder)
         {
             using var ms      = new MemoryStream(zipBytes);
             using var archive = new ZipArchive(ms, ZipArchiveMode.Read);
 
+            // Detect a common top-level folder prefix (e.g. "BepInExPack/") and strip it.
+            // This handles Thunderstore packages that wrap everything in a subfolder.
+            string stripPrefix = DetectStripPrefix(archive);
+
             foreach (var entry in archive.Entries)
             {
-                // Skip Thunderstore-only root files (manifest.json, icon.png, README.md)
-                if (!entry.FullName.StartsWith("BepInEx", StringComparison.OrdinalIgnoreCase))
+                string relativePath = entry.FullName;
+
+                // Strip common prefix if present
+                if (!string.IsNullOrEmpty(stripPrefix) &&
+                    relativePath.StartsWith(stripPrefix, StringComparison.OrdinalIgnoreCase))
+                    relativePath = relativePath.Substring(stripPrefix.Length);
+
+                // Skip Thunderstore metadata files (at any level after stripping)
+                if (ThunderstoreMetaFiles.Contains(relativePath) ||
+                    ThunderstoreMetaFiles.Contains(entry.Name))
                     continue;
 
-                string destPath = Path.Combine(destinationFolder, entry.FullName.Replace('/', Path.DirectorySeparatorChar));
+                // Skip empty paths (was just the prefix folder itself)
+                if (string.IsNullOrEmpty(relativePath)) continue;
 
+                string destPath = Path.Combine(destinationFolder, relativePath.Replace('/', Path.DirectorySeparatorChar));
+
+                // Directory entry
                 if (string.IsNullOrEmpty(entry.Name))
                 {
                     Directory.CreateDirectory(destPath);
@@ -406,8 +429,24 @@ namespace ThronefallInteractiveInstaller
                 using var fileStream  = File.Create(destPath);
                 entryStream.CopyTo(fileStream);
 
-                Log($"  → {entry.FullName}");
+                Log($"  → {relativePath}");
             }
+        }
+
+        string DetectStripPrefix(ZipArchive archive)
+        {
+            // If every non-metadata entry shares the same top-level folder, strip it.
+            string commonPrefix = null;
+            foreach (var entry in archive.Entries)
+            {
+                if (ThunderstoreMetaFiles.Contains(entry.FullName)) continue;
+                int slash = entry.FullName.IndexOf('/');
+                if (slash < 0) return ""; // file at root — no prefix
+                string prefix = entry.FullName.Substring(0, slash + 1);
+                if (commonPrefix == null) commonPrefix = prefix;
+                else if (!commonPrefix.Equals(prefix, StringComparison.OrdinalIgnoreCase)) return "";
+            }
+            return commonPrefix ?? "";
         }
 
         // ── Launch Configurator ───────────────────────────────────────────────────
