@@ -5,6 +5,14 @@
 - Installer now has a custom icon (exe and title bar)
 - README updated with installer and manual zip installation options
 
+## [1.0.9] - 2026-04-05
+### Fixed
+- Installer now correctly extracts BepInEx — `winhttp.dll` and `doorstop_config.ini` are placed at the game root (required for BepInEx to hook into the game). Previously BepInEx would appear installed but not load.
+
+## [1.0.8] - 2026-04-05
+### Added
+- Self-contained installer (`ThronefallInteractiveInstaller.exe`) — auto-detects Thronefall folder, downloads and installs BepInEx if needed, then installs the mod
+
 ## [1.0.7] - 2026-04-05
 ### Changed
 - Username is now automatically converted to lowercase in both the in-game panel and Configurator
