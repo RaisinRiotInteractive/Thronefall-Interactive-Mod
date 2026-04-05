@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.10] - 2026-04-05
+### Added
+- Installer now has a custom icon (exe and title bar)
+- README updated with installer and manual zip installation options
+
 ## [1.0.7] - 2026-04-05
 ### Changed
 - Username is now automatically converted to lowercase in both the in-game panel and Configurator

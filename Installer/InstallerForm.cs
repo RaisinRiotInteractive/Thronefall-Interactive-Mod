@@ -38,7 +38,19 @@ namespace ThronefallInteractiveInstaller
         {
             Http.DefaultRequestHeaders.UserAgent.ParseAdd("ThronefallInteractiveInstaller/1.0");
             BuildUI();
+            SetIconFromExe();
             DetectAndSetGamePath();
+        }
+
+        void SetIconFromExe()
+        {
+            try
+            {
+                // Extract the icon embedded in the exe itself so the form title bar matches
+                var exeIcon = Icon.ExtractAssociatedIcon(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+                if (exeIcon != null) Icon = exeIcon;
+            }
+            catch { }
         }
 
         // ── UI Construction ───────────────────────────────────────────────────────
