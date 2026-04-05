@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.4] - 2026-04-05
+### Changed
+- Debug tab in F9 panel now reads directly from `interactive_spawns.json` instead of the prefab cache, so it reflects only the curated enemy list
+- Removed non-functional enemies from the bundled enemy list: BOSS FIGHT, E Corrupt, E Defensive, E Firestorm, E FlyingWizzard, E Ghostqueen, E Iron, E Rotary
+
 ## [1.0.3] - 2026-04-05
 ### Fixed
 - Follow rules now trigger based on stream-wide total followers (e.g. every N new followers) instead of per-user, which was always 1 and never useful.

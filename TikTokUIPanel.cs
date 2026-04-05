@@ -40,6 +40,7 @@ namespace TikTokGiftsToEnemies
             DontDestroyOnLoad(gameObject);
             _usernameInput = PluginConfig.TikTokUsername.Value;
             LoadConfigBuffers();
+            RefreshDebugEnemyList();
         }
 
         void LoadConfigBuffers()
@@ -192,68 +193,60 @@ namespace TikTokGiftsToEnemies
 
         void RefreshDebugEnemyList()
         {
-            // Merge: current level waves + everything in the persistent prefab cache
-            var seen = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
-
-            if (EnemySpawner.instance?.waves != null)
+            try
             {
-                foreach (var wave in EnemySpawner.instance.waves)
+                string path = System.IO.Path.Combine(BepInEx.Paths.ConfigPath, "interactive_spawns.json");
+                if (!System.IO.File.Exists(path))
                 {
-                    if (wave?.spawns == null) continue;
-                    foreach (var s in wave.spawns)
-                        if (s?.enemyPrefab != null) seen.Add(s.enemyPrefab.name);
+                    _debugEnemyNames = System.Array.Empty<string>();
+                    return;
                 }
+
+                string json = System.IO.File.ReadAllText(path);
+                var m = System.Text.RegularExpressions.Regex.Match(
+                    json, "\"allEnemies\"\\s*:\\s*\\[([^\\]]*?)\\]");
+                if (!m.Success)
+                {
+                    _debugEnemyNames = System.Array.Empty<string>();
+                    return;
+                }
+
+                var names = new System.Collections.Generic.List<string>();
+                foreach (var entry in m.Groups[1].Value.Split(','))
+                {
+                    string name = entry.Trim().Trim('"');
+                    if (name.Length > 0) names.Add(name);
+                }
+                names.Sort(System.StringComparer.OrdinalIgnoreCase);
+                _debugEnemyNames = names.ToArray();
             }
-
-            // CacheCount tells us how many are cached; we show all of them
-            // by pulling names from spawns.json via the same path the configurator uses
-            // — but the simplest in-game approach is just the cache keys exposed via CacheCount.
-            // We let SpawnOrchestrator surface them through a new helper.
-            foreach (var name in SpawnOrchestrator.CachedEnemyNames)
-                seen.Add(name);
-
-            var list = new System.Collections.Generic.List<string>(seen);
-            list.Sort(System.StringComparer.OrdinalIgnoreCase);
-            _debugEnemyNames = list.ToArray();
+            catch
+            {
+                _debugEnemyNames = System.Array.Empty<string>();
+            }
         }
 
         void DrawDebugTab()
         {
-            // Scanner status
-            string scanStatus = PrefabScanner.Instance?.Status ?? "Scanner not running";
-            GUILayout.Label(scanStatus, SmallStyle());
-            GUILayout.Space(2);
-
             GUILayout.BeginHorizontal();
             GUILayout.Label("Count:", GUILayout.Width(44));
             _debugCountInput = GUILayout.TextField(_debugCountInput, GUILayout.Width(36));
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Refresh List", GUILayout.Width(90))) RefreshDebugEnemyList();
+            if (GUILayout.Button("Refresh", GUILayout.Width(60))) RefreshDebugEnemyList();
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(8);
-            GUILayout.Label("── Manual Spawn ─────────────────────────────────");
-            GUILayout.Label("Prefab name:", SmallStyle());
-            _simPrefabInput = GUILayout.TextField(_simPrefabInput);
-            if (GUILayout.Button("Spawn By Name"))
-            {
-                int.TryParse(_debugCountInput, out int cnt);
-                if (cnt < 1) cnt = 1;
-                if (!string.IsNullOrEmpty(_simPrefabInput))
-                    SpawnOrchestrator.Instance?.SimulateSpawn(_simPrefabInput.Trim(), cnt);
-            }
+            GUILayout.Space(4);
 
-            GUILayout.Space(8);
             if (_debugEnemyNames.Length == 0)
             {
-                GUILayout.Label("No enemies cached yet — wait for the background scan or load a level.", SmallStyle());
+                GUILayout.Label("No enemies found — check interactive_spawns.json exists in BepInEx/config.", SmallStyle());
                 return;
             }
 
-            GUILayout.Label($"{_debugEnemyNames.Length} enemies available — click to spawn:", SmallStyle());
+            GUILayout.Label($"{_debugEnemyNames.Length} enemies from config — click to test spawn:", SmallStyle());
             GUILayout.Space(2);
 
-            _debugScroll = GUILayout.BeginScrollView(_debugScroll, GUILayout.Height(200));
+            _debugScroll = GUILayout.BeginScrollView(_debugScroll, GUILayout.Height(240));
             foreach (var name in _debugEnemyNames)
             {
                 if (GUILayout.Button(name))
