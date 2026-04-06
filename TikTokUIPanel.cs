@@ -124,6 +124,10 @@ namespace TikTokGiftsToEnemies
             }
 
             GUILayout.Space(4);
+            if (GUILayout.Button("Open Gift Configurator"))
+                LaunchConfigurator();
+
+            GUILayout.Space(4);
             if (GUILayout.Button("Hide (press F9 to restore)"))
                 _showPanel = false;
 
@@ -189,6 +193,29 @@ namespace TikTokGiftsToEnemies
 
             GUILayout.Space(4);
             if (GUILayout.Button("Save")) SaveConfig();
+        }
+
+        void LaunchConfigurator()
+        {
+            try
+            {
+                string pluginDir = System.IO.Path.GetDirectoryName(
+                    System.Reflection.Assembly.GetExecutingAssembly().Location);
+                string exePath = System.IO.Path.Combine(pluginDir, "ThronefallInteractiveConfigurator.exe");
+                if (System.IO.File.Exists(exePath))
+                {
+                    System.Diagnostics.Process.Start(exePath);
+                }
+                else
+                {
+                    TikTokGiftsPlugin.Instance.Logger.LogWarning(
+                        $"Configurator not found at: {exePath}");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                TikTokGiftsPlugin.Instance.Logger.LogError($"Failed to launch configurator: {ex.Message}");
+            }
         }
 
         void RefreshDebugEnemyList()

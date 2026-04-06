@@ -8,7 +8,7 @@
     <Nullable>disable</Nullable>
     <AssemblyName>ThronefallInteractive</AssemblyName>
     <Description>Thronefall mod routing TikTok gifts to enemy spawns.</Description>
-    <Version>1.0.10</Version>
+    <Version>1.0.11</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <ThronefallDir Condition="'$(ThronefallDir)' == ''">H:\SteamLibrary\steamapps\common\Thronefall</ThronefallDir>

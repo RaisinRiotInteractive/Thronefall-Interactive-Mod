@@ -2,13 +2,18 @@
 
 ## Installation
 
-### 1. Install BepInEx
+### Option 1 — Installer (Recommended)
 
-Download and install [BepInExPack for Thronefall](https://thunderstore.io/c/thronefall/p/BepInEx/BepInExPack_Thronefall/) from Thunderstore. Extract it into your Thronefall game folder (the one containing `Thronefall.exe`).
+1. Download `ThronefallInteractive-Installer.exe` from the [Releases](https://github.com/RaisinRiotInteractive/Thronefall-Interactive-Mod/releases/latest) page.
+2. Run it — it will auto-detect your Thronefall folder, download and install BepInEx if needed, then install the mod.
+3. Click **Launch Configurator** when done to set up your TikTok username and rules.
 
-### 2. Install the Mod
+> **Windows SmartScreen warning?** Click **More info** then **Run anyway**. Or right-click → **Properties** → tick **Unblock** → OK. The full source is available in this repository.
 
-Download the latest `Thronefall-Interactive-Mod-x.x.x.zip` from the [Releases](https://github.com/RaisinRiotInteractive/Thronefall-Interactive-Mod/releases/latest) page and extract it directly into your Thronefall game folder.
+### Option 2 — Manual (Zip)
+
+1. Download and install [BepInExPack for Thronefall](https://thunderstore.io/c/thronefall/p/BepInEx/BepInExPack_Thronefall/) from Thunderstore. Extract it into your Thronefall game folder (the one containing `Thronefall.exe`).
+2. Download the latest `Thronefall-Interactive-Mod-x.x.x.zip` from the [Releases](https://github.com/RaisinRiotInteractive/Thronefall-Interactive-Mod/releases/latest) page and extract it directly into your Thronefall game folder.
 
 After extraction your Thronefall folder should look like this:
 
@@ -32,7 +37,7 @@ Thronefall/
 
 ### Using the Standalone Configurator (Recommended)
 
-Run `ThronefallInteractiveConfigurator.exe` from `BepInEx/plugins/ThronefallInteractive/`. It auto-detects your config and enemy list and lets you set up all rules with dropdowns — no manual editing needed.
+Run `ThronefallInteractiveConfigurator.exe` from `BepInEx/plugins/ThronefallInteractive/`. It auto-detects your config and enemy list and lets you set up all rules with dropdowns — no manual editing needed. A default config is bundled with the mod so you can configure everything without launching the game first.
 
 > **Windows SmartScreen warning?** Click **More info** then **Run anyway**. Alternatively, right-click the EXE → **Properties** → tick **Unblock** → OK. The full source code is available in this repository.
 
@@ -44,7 +49,7 @@ Press **F9** in-game to open the connection panel. From here you can enter your 
 
 ## Connecting to TikTok
 
-1. Enter your TikTok username (e.g. `@YourName`) in the Configurator or the in-game F9 panel.
+1. Enter your TikTok username (e.g. `@YourName`) in the Configurator or the in-game F9 panel. Your username is automatically converted to lowercase — no need to worry about capitalisation.
 2. Click **Connect**. The status will change to "Connected" once established.
 3. Your TikTok Live stream must be active for the connection to work.
 
@@ -103,8 +108,8 @@ BepInEx/config/com.raisinriotinteractive.thronefall.interactive.cfg
 
 ## Troubleshooting
 
-**SmartScreen says the Configurator is unsafe**  
-Click **More info** → **Run anyway**. Or right-click → **Properties** → tick **Unblock** → OK. This appears because the executable is not code-signed. The full source is available in this repo.
+**SmartScreen warning on the installer or Configurator**  
+Click **More info** → **Run anyway**. Or right-click → **Properties** → tick **Unblock** → OK. This appears because the executables are not code-signed. The full source is available in this repo.
 
 **Connection Error**  
 Ensure your TikTok username is correct and your Live stream is currently active.

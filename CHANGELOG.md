@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.11] - 2026-04-06
+### Added
+- "Open Gift Configurator" button in the in-game F9 panel (Connect tab, below username) — launches the standalone Configurator directly from the game
+
 ## [1.0.10] - 2026-04-05
 ### Added
 - Installer now has a custom icon (exe and title bar)
